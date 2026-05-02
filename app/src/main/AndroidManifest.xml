@@ -18,6 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MaskateApp">
 
+        <activity android:name=".ScannerActivity"/>
         <activity android:name=".ImagemActivity"/>
         <activity android:name=".DetalheActivity"/>
         <activity android:name=".AddActivity" />

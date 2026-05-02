@@ -1,14 +1,14 @@
 package com.example.maskateapp;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
+import com.example.maskateapp.adapter.ImagemAdapter;
+
+import java.util.ArrayList;
 
 public class DetalheActivity extends AppCompatActivity {
 
@@ -19,31 +19,19 @@ public class DetalheActivity extends AppCompatActivity {
 
         TextView nome = findViewById(R.id.txtNome);
         TextView codigo = findViewById(R.id.txtCodigo);
-        ImageView img = findViewById(R.id.imgProduto);
+        TextView codigoBarras = findViewById(R.id.txtCodigoBarras);
 
-        nome.setText(getIntent().getStringExtra("nome"));
-        codigo.setText(getIntent().getStringExtra("codigo"));
+        ViewPager2 viewPager = findViewById(R.id.viewPager); // 🔥 AQUI
 
-        String url = getIntent().getStringExtra("img");
+        nome.setText("Nome: " + getIntent().getStringExtra("nome"));
+        codigo.setText("Código: " + getIntent().getStringExtra("codigo"));
+        codigoBarras.setText("Código de Barras: " +
+                getIntent().getStringExtra("codigoBarras"));
 
-        Log.d("IMG_URL", url);
+        ArrayList<String> urls = getIntent().getStringArrayListExtra("imgs");
 
-        if (url != null && url.startsWith("http://")) {
-            url = url.replace("http://", "https://");
+        if (urls != null && !urls.isEmpty()) {
+            viewPager.setAdapter(new ImagemAdapter(urls));
         }
-
-        String finalUrl = url;
-
-        Glide.with(this)
-                .load(finalUrl)
-                .placeholder(android.R.drawable.ic_menu_gallery)
-                .error(android.R.drawable.ic_delete)
-                .into(img);
-
-        img.setOnClickListener(v -> {
-            Intent i = new Intent(DetalheActivity.this, ImagemActivity.class);
-            i.putExtra("img", finalUrl);
-            startActivity(i);
-        });
     }
 }

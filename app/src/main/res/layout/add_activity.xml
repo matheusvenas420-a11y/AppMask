@@ -1,51 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:padding="16dp">
+    android:layout_height="match_parent">
 
-    <EditText
-        android:id="@+id/nome"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="Nome"/>
+        android:orientation="vertical"
+        android:padding="20dp">
 
-    <EditText
-        android:id="@+id/codigo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Código"
-        android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/nome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do produto" />
 
-    <EditText
-        android:id="@+id/quantidade"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Quantidade"
-        android:inputType="number"
-        android:layout_marginTop="10dp"/>
+        <EditText
+            android:id="@+id/codigo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código interno"
+            android:layout_marginTop="10dp" />
 
-    <Button
-        android:id="@+id/btnCamera"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Tirar Foto"
-        android:layout_marginTop="15dp"/>
+        <!-- Código de barras (preenchido automaticamente) -->
+        <EditText
+            android:id="@+id/codigoBarras"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Código de barras"
+            android:enabled="false"
+            android:layout_marginTop="10dp" />
 
-    <ImageView
-        android:id="@+id/img"
-        android:layout_width="200dp"
-        android:layout_height="200dp"
-        android:layout_marginTop="15dp"
-        android:scaleType="centerCrop"/>
+        <EditText
+            android:id="@+id/quantidade"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Quantidade"
+            android:inputType="number"
+            android:layout_marginTop="10dp" />
 
-    <Button
-        android:id="@+id/btnSalvar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Salvar"
-        android:layout_marginTop="15dp"/>
+        <!-- Imagens -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp">
 
-</LinearLayout>
+            <ImageView
+                android:id="@+id/img1"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="#ccc"
+                android:scaleType="centerCrop" />
+
+            <ImageView
+                android:id="@+id/img2"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:layout_marginStart="10dp"
+                android:background="#ccc"
+                android:scaleType="centerCrop" />
+        </LinearLayout>
+
+        <!-- Botão abrir câmera -->
+        <Button
+            android:id="@+id/btnCamera"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Tirar Foto"
+            android:layout_marginTop="15dp" />
+
+        <!-- Botão scanner -->
+        <Button
+            android:id="@+id/btnScanner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ler Código de Barras"
+            android:layout_marginTop="10dp" />
+
+        <!-- Salvar -->
+        <Button
+            android:id="@+id/btnSalvar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            android:layout_marginTop="10dp" />
+
+    </LinearLayout>
+</ScrollView>

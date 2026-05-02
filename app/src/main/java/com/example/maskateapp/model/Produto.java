@@ -1,18 +1,32 @@
 package com.example.maskateapp.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Produto {
+
     private String nome;
     private String codigo;
+    private String codigoBarras;
     private int quantidade;
-    private String imgurl;
+    private List<String> imgurl;
+
+    // 🔹 CONSTRUTOR VAZIO (OBRIGATÓRIO pro Firebase)
     public Produto() {
+        imgurl = new ArrayList<>();
     }
-    public Produto(String nome, String codigo, int quantidade, String imgurl) {
+
+    // 🔹 CONSTRUTOR COMPLETO
+    public Produto(String nome, String codigo, String codigoBarras, int quantidade, List<String> imgurl) {
         this.nome = nome;
         this.codigo = codigo;
+        this.codigoBarras = codigoBarras;
         this.quantidade = quantidade;
-        this.imgurl = imgurl;
+        this.imgurl = imgurl != null ? imgurl : new ArrayList<>();
     }
+
+    // GETTERS E SETTERS
+
     public String getNome() {
         return nome;
     }
@@ -29,6 +43,14 @@ public class Produto {
         this.codigo = codigo;
     }
 
+    public String getCodigoBarras() {
+        return codigoBarras;
+    }
+
+    public void setCodigoBarras(String codigoBarras) {
+        this.codigoBarras = codigoBarras;
+    }
+
     public int getQuantidade() {
         return quantidade;
     }
@@ -37,11 +59,11 @@ public class Produto {
         this.quantidade = quantidade;
     }
 
-    public String getImgurl() {
+    public List<String> getImgurl() {
         return imgurl;
     }
 
-    public void setImgurl(String imgurl) {
-        this.imgurl = imgurl;
+    public void setImgurl(List<String> imgurl) {
+        this.imgurl = imgurl != null ? imgurl : new ArrayList<>();
     }
 }

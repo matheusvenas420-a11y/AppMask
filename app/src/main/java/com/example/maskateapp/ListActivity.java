@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -36,30 +35,54 @@ public class ListActivity extends AppCompatActivity {
         inputBusca = findViewById(R.id.inputBusca);
 
         recycler.setLayoutManager(new LinearLayoutManager(this));
+
         adapter = new ProdutoAdapter(lista, p -> {
+
             Intent i = new Intent(ListActivity.this, DetalheActivity.class);
+
             i.putExtra("nome", p.getNome());
             i.putExtra("codigo", p.getCodigo());
             i.putExtra("qtd", p.getQuantidade());
-            i.putExtra("img", p.getImgurl());
+            i.putExtra("codigoBarras", p.getCodigoBarras());
+
+            // 🔥 PROTEÇÃO contra null e lista vazia
+            if (p.getImgurl() != null && !p.getImgurl().isEmpty()) {
+                i.putStringArrayListExtra("imgs", new ArrayList<>(p.getImgurl()));
+            }
+
             startActivity(i);
         });
 
         recycler.setAdapter(adapter);
 
+        // 🔥 FIREBASE CORRIGIDO
         repo.listar(query -> {
+
             List<Produto> novaLista = new ArrayList<>();
 
             for (DocumentSnapshot doc : query.getDocuments()) {
-                Produto p = doc.toObject(Produto.class);
-                if (p != null) {
-                    novaLista.add(p);
+                try {
+                    Produto p = doc.toObject(Produto.class);
+
+                    if (p != null) {
+                        // 🔥 GARANTE que lista de imagens nunca seja null
+                        if (p.getImgurl() == null) {
+                            p.setImgurl(new ArrayList<>());
+                        }
+
+                        novaLista.add(p);
+                    }
+
+                } catch (Exception e) {
+                    e.printStackTrace(); // mostra erro real
                 }
             }
 
-            adapter.atualizarLista(novaLista);
+            // 🔥 SEMPRE atualizar na UI thread
+            runOnUiThread(() -> adapter.atualizarLista(novaLista));
         });
 
+        // 🔍 BUSCA
         inputBusca.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
